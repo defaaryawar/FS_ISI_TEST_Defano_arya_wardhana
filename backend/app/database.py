@@ -5,10 +5,10 @@ from sqlalchemy.orm import sessionmaker
 
 # Environment variables with defaults for local development
 DB_USER = os.environ.get("DB_USER", "postgres")
-DB_PASSWORD = os.environ.get("DB_PASSWORD", "postgres")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "wardhana13")
 DB_HOST = os.environ.get("DB_HOST", "db")
 DB_PORT = os.environ.get("DB_PORT", "5432")
-DB_NAME = os.environ.get("DB_NAME", "taskdb")
+DB_NAME = os.environ.get("DB_NAME", "TEST_PT_ihsan")
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
 

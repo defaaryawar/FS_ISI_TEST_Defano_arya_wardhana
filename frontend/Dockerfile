@@ -1,24 +1,16 @@
-# Build Stage
-FROM node:18-alpine as build
+FROM node:18-alpine
 
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
-
 RUN npm install
 
+# Copy source code
 COPY . .
 
-RUN npm run build
+# Set environment variable
+ENV NODE_ENV=development
 
-# Production Stage
-FROM nginx:alpine
-
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Optional: custom nginx config
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-CMD ["nginx", "-g", "daemon off;"]
+# Default command (will be overridden by docker-compose)
+CMD ["npm", "run", "dev"]

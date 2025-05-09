@@ -6,9 +6,9 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:5173"  # 3000 (host) -> 5173 (vite dev server)
+      - "3000:5173"
     environment:
-      - VITE_API_URL=http://localhost:8000/api  # disesuaikan dengan vite
+      - VITE_API_URL=http://localhost:8000/api
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -19,37 +19,56 @@ services:
       - app-network
 
   backend:
-    build: 
+    build:
       context: ./backend
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
     environment:
       - DB_USER=postgres
-      - DB_PASSWORD=postgres
+      - DB_PASSWORD=wardhana13
       - DB_HOST=db
       - DB_PORT=5432
-      - DB_NAME=taskdb
+      - DB_NAME=TEST_PT_ihsan
+      - PYTHONUNBUFFERED=1  # Add this to ensure logs aren't buffered
+      - LOG_LEVEL=INFO
     volumes:
       - ./backend:/app
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     networks:
       - app-network
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
   db:
     image: postgres:14
     volumes:
       - postgres_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=taskdb
+      - POSTGRES_PASSWORD=wardhana13
+      - POSTGRES_DB=TEST_PT_ihsan
+      - PGDATA=/var/lib/postgresql/data/pgdata
     ports:
       - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
     networks:
       - app-network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   app-network:
