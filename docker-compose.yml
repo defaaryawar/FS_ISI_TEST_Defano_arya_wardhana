@@ -1,4 +1,4 @@
-version: '3.8'
+# version: '3.8'
 
 services:
   frontend:
@@ -27,16 +27,16 @@ services:
     environment:
       - DB_USER=postgres
       - DB_PASSWORD=wardhana13
-      - DB_HOST=db
+      - DB_HOST=host.docker.internal
       - DB_PORT=5432
       - DB_NAME=TEST_PT_ihsan
       - PYTHONUNBUFFERED=1  # Add this to ensure logs aren't buffered
       - LOG_LEVEL=INFO
     volumes:
       - ./backend:/app
-    depends_on:
-      db:
-        condition: service_healthy
+    # depends_on:
+    #   db:
+    #     condition: service_healthy
     command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
     networks:
       - app-network
@@ -45,30 +45,30 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-  db:
-    image: postgres:14
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=wardhana13
-      - POSTGRES_DB=TEST_PT_ihsan
-      - PGDATA=/var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    networks:
-      - app-network
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "10m"
-        max-file: "3"
+  # db:
+  #   image: postgres:14
+  #   volumes:
+  #     - postgres_data:/var/lib/postgresql/data
+  #   environment:
+  #     - POSTGRES_USER=postgres
+  #     - POSTGRES_PASSWORD=wardhana13
+  #     - POSTGRES_DB=TEST_PT_ihsan
+  #     - PGDATA=/var/lib/postgresql/data/pgdata
+  #   ports:
+  #     - "5432:5432"
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U postgres"]
+  #     interval: 5s
+  #     timeout: 5s
+  #     retries: 5
+  #     start_period: 10s
+  #   networks:
+  #     - app-network
+  #   logging:
+  #     driver: "json-file"
+  #     options:
+  #       max-size: "10m"
+  #       max-file: "3"
 
 networks:
   app-network:
