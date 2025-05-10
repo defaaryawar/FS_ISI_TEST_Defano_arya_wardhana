@@ -30,7 +30,7 @@ services:
       - DB_HOST=host.docker.internal
       - DB_PORT=5432
       - DB_NAME=TEST_PT_ihsan
-      - PYTHONUNBUFFERED=1  # Add this to ensure logs aren't buffered
+      - PYTHONUNBUFFERED=1
       - LOG_LEVEL=INFO
     volumes:
       - ./backend:/app
@@ -45,6 +45,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
   # db:
   #   image: postgres:14
   #   volumes:

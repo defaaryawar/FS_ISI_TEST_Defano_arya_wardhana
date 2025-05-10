@@ -33,8 +33,8 @@ const App: React.FC = () => {
   const { ongoingTasks, completedTasks } = getFilteredTasks();
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-4xl font-bold text-center mb-8">Task Management</h1>
+    <div className="max-w-2xl mx-auto md:p-4 p-8">
+      <h1 className="md:text-4xl text-3xl font-bold text-center mb-8">Task Management</h1>
 
       <TaskForm
         onSubmit={editingTask ? (title) => handleUpdateTask(title, editingTask.id) : handleAddTask}
