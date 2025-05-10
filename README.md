@@ -70,11 +70,12 @@ docker-compose up --build
 
 Aplikasi akan berjalan di:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:8000/docs
+- Backend API: http://localhost:8000/api
 - PostgreSQL: localhost:5432
 
 ### 3. Endpoint API
-Swagger UI tersedia di: http://localhost:8000/docs
+http://localhost:8000/api/task (Fetch utama)
+http://localhost:8000/api/task/{task_id}
 
 ## 🧪 Pengujian
 Pastikan semua fitur dapat digunakan:
